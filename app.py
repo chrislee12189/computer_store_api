@@ -41,6 +41,11 @@ def create_db():
     db.create_all()
     print('Tables created.')
 
+@app.cli.command('drop')
+def drop_db():
+    #drop tables
+    db.drop_all()
+    print('Tables have been dropped successfully.')
 
 @app.cli.command('seed')
 def seed():
