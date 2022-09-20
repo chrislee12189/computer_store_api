@@ -6,5 +6,5 @@ class Cpu(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     cpu_type = db.Column(db.Integer)
     cpu_name = db.Column(db.String())
-    price = db.Column(db.Integer)
+    price = db.Column(db.Integer, db.ForeignKey('product.price'))
     rating = db.Column(db.Integer)

@@ -8,3 +8,4 @@ class Psu(db.Model):
     psu_name = db.Column(db.String())
     voltage = db.Column(db.Integer)
     rating = db.Column(db.Integer)
+    price = db.Column(db.Integer, db.ForeignKey('product.price'))

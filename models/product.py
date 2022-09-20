@@ -7,4 +7,5 @@ class Product(db.Model):
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
     quantity = db.Column(db.Integer)
     product_type = db.Column(db.String())
+    price = db.Column(db.Integer)
 

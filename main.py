@@ -2,16 +2,19 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow 
+from models.customers import Customer 
+
+app = Flask(__name__)    
+db = SQLAlchemy(app)
+ma = Marshmallow(app)
 
 def create_app():
     #create new flask app, name = 'app'
-    app = Flask(__name__)
-
+    db.init_app(app)
     app.config.from_object('config.app_config')
-    db = SQLAlchemy(app)
-    ma = Marshmallow(app)
     return app
-    
+
+
 
 #schema defines what the structure of our data is so that when we go to convert to json, it knows how to work/which of the columns we want included
 #schema tells marshmallow which fields we want included in our json
