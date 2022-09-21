@@ -2,19 +2,21 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow 
-from models.customers import Customer 
 
 app = Flask(__name__)    
+app.config.from_object('config.app_config')
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 def create_app():
     #create new flask app, name = 'app'
     db.init_app(app)
-    app.config.from_object('config.app_config')
+    ma.init_app(app)
+    #begin modularisation of app so cli commands dont rely on 'app' prefix
+    from commands import db_commands
+    # register the blueprint for our commands. commands and controllers will use blueprints
+    app.register_blueprint(db_commands)
     return app
-
-
 
 #schema defines what the structure of our data is so that when we go to convert to json, it knows how to work/which of the columns we want included
 #schema tells marshmallow which fields we want included in our json
@@ -40,6 +42,7 @@ def drop_db():
 
 @app.cli.command('seed')
 def seed():
+    from models.customers import Customer 
     customer = Customer(
         first_name = 'Chris',
         last_name = 'Lee',
@@ -61,6 +64,7 @@ def index():
 
 @app.route('/customers')
 def customer_route():
+    from models.customers import Customer 
     #same as sql select * from users; get all customers from database table
     customers = Customer.query.all()
     #convert the cards from the database into a JSON format and store them in the result variable

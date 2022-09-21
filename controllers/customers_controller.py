@@ -8,5 +8,5 @@ customers = Blueprint('customers', __name__, url_prefix='/customers')
 @customers.route('/', methods=['GET'])
 def get_customers():
     #access all customers on database
-    customers_list = customers.query.all()
-    
+    customers_list = Customer.query.all()
+    return customers_list
