@@ -1,5 +1,6 @@
 from flask import Blueprint 
 from flask import jsonify
+from flask import request
 from main import db 
 from models.customers import Customer 
 from schemas.customers_schema import customer_schema, customers_schema
@@ -23,3 +24,29 @@ def get_customer(id):
     customer_list = Customer.query.get(id)
     result = customer_schema.dump(customer_list)
     return jsonify(result)
+
+@customers.route('/', methods=['POST'])
+def create_customer():
+    customer_fields = customer_schema.load(request.json)
+    customer = Customer(
+        first_name = customer_fields['first_name'], 
+        last_name = customer_fields['last_name'],
+        address = customer_fields['address'],
+        postcode = customer_fields['postcode'],
+        phone = customer_fields['phone']
+    )
+    db.session.add(customer)
+    db.session.commit()
+    return jsonify(customer_schema.dump(customer))
+
+
+
+
+
+
+    
+#GET retrieves data from server 
+#POST sends data to server to create new resource 
+#PUT updates exsisting resource
+#PATCH similar to put, modifies exsisting resource. put method will contain complete new version, patch will contain only specific changes to the resouce
+#DELETE deletes resource specified by uri
