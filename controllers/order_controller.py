@@ -1,9 +1,8 @@
 from flask import Blueprint 
 from flask import jsonify
-# from flask import request
-# from main import db 
+from flask import request
+from main import db 
 from schemas.orders_schema import order_schema, orders_schema
-# from schemas.customers_schema import customer_schema
 from models.order import Order 
 
 order = Blueprint('orders', __name__, url_prefix ="/orders")
@@ -27,4 +26,20 @@ def get_orders(id):
     result = order_schema.dump(orders_list)
     return jsonify(result)
 
-#worked on error messages for GET method (when user enters order id that is not in database), will work on POST methods next.
+#post method
+@order.route('/', methods = ['POST'])
+def create_order():
+    #create new order object
+    #get the values from the request and load them with the single schema
+    order_fields = order_schema.load(request.json)
+    new_order = Order(
+        customer_name = order_fields['customers_name'],
+        to_address = order_fields['to_address'],
+        to_postcode = order_fields['to_postcode'],
+        shipping_date = order_fields['shipping_date'],
+    )
+    db.session.add(new_order)
+    db.session.commit()
+    return jsonify(order_schema.dump(new_order))
+
+
