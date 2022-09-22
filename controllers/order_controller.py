@@ -21,5 +21,10 @@ def get_order():
 def get_orders(id):
     orders_list = Order.query.get(id)
     #use order_schema to serialize the order so it can be converted/displayed to JSON
+    #check if we have the order in the database. 
+    if not orders_list:
+        return {"Error":"Sorry, that order was not found. Try to find a different order."}
     result = order_schema.dump(orders_list)
     return jsonify(result)
+
+#worked on error messages for GET method (when user enters order id that is not in database), will work on POST methods next.
