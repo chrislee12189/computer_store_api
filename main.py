@@ -16,6 +16,10 @@ def create_app():
     from commands import db_commands
     # register the blueprint for our commands. commands and controllers will use blueprints
     app.register_blueprint(db_commands)
+    from controllers import registerable_controllers
+    #iteration of controllers, map controllers 
+    for controller in registerable_controllers:
+        app.register_blueprint(controller)
     return app
 
 #schema defines what the structure of our data is so that when we go to convert to json, it knows how to work/which of the columns we want included
