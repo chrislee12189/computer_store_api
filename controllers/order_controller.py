@@ -43,4 +43,28 @@ def create_order():
     return jsonify(order_schema.dump(new_order))
 
 
-#random comment for commit after merge
+#delete an order 
+@order.route('/<int:id>', methods = ['DELETE'])
+def delete_order(id):
+    order = Order.query.get(id)
+    if not order:
+        return {"Error": "Cannot delete an order that does not exsist. Please enter an order that exsists."}
+    db.session.delete(order)
+    db.session.commit()
+    return {"Message": "Successfully deleted order."}
+
+#update order
+@order.route('/<int:id>', methods = ['PUT'])
+def update_order(id):
+    #find the order/if it even exists
+    order = Order.query.get(id)
+    if not order:
+        return {"message": "Cannot find the order, please enter an exsisting order."}
+    order_fields = order_schema.load(request.json)
+    order.customer_name = order_fields['customers_name']
+    order.to_address = order_fields['to_address']
+    order.to_postcode= order_fields['to_postcode']
+    order.shipping_date = order_fields['shipping_date']
+    #session already exists so just need to commit changes for this method.
+    db.session.commit()
+    return jsonify(order_schema.dump(order))
