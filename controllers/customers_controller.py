@@ -25,6 +25,7 @@ def get_customer(id):
     result = customer_schema.dump(customer_list)
     return jsonify(result)
 
+#create new customer
 @customers.route('/', methods=['POST'])
 def create_customer():
     customer_fields = customer_schema.load(request.json)
@@ -39,9 +40,20 @@ def create_customer():
     db.session.commit()
     return jsonify(customer_schema.dump(customer))
 
-
-
-
+#update exsisting customer
+@customers.route('/<int:id>', methods=['PUT'])
+def update_customer(id):
+    customer = Customer.query.get(id)
+    if not customer:
+        return {"Error: Customer does not exsist, to update a customer, enter an exsisting customer."}
+    customer_fields = customer_schema.load(request.json)
+    customer.first_name= customer_fields['first_name']
+    customer.last_name= customer_fields['last_name']
+    customer.address= customer_fields['address']
+    customer.postcode= customer_fields['postcode']
+    customer.phone= customer_fields['phone']
+    db.session.commit()
+    return jsonify(customer_schema.dump(customer))
 
 
     

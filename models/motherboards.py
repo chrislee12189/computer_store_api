@@ -7,5 +7,5 @@ class Motherboards(db.Model):
     # product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     motherboard_type = db.Column(db.Integer)
     motherboard_name = db.Column(db.String())
-    price = db.Column(db.Integer, db.ForeignKey('product.price'))
+    price = db.Column(db.Integer)
     rating = db.Column(db.Integer)
