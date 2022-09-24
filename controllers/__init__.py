@@ -4,7 +4,7 @@ from controllers.product_controller import products
 # from controllers.cpu_controller import cpu 
 # from controllers.gpu_controller import gpu 
 # from controllers.psu_controller import psu
-# from controllers.ram_controller import ram
+from controllers.ram_controller import ram
 from controllers.motherboards_controller import motherboards
 # from controllers.ratings_controller import ratings
 # from controllers.mobo_cpu_compat_controller import mobo_cpu_compat
@@ -12,4 +12,4 @@ from controllers.motherboards_controller import motherboards
 
 #register controllers here 
 
-registerable_controllers = [customers,order,products,motherboards]
+registerable_controllers = [customers,order,products,motherboards,ram]

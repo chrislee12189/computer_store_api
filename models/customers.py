@@ -1,5 +1,6 @@
 from main import db 
 
+
 class Customer(db.Model):
     # Set the database table that will store instances of this model
     __tablename__ = 'customers'

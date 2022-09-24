@@ -55,6 +55,15 @@ def update_customer(id):
     db.session.commit()
     return jsonify(customer_schema.dump(customer))
 
+#DELETE customer 
+@customers.route('/<int:id>', methods=['DELETE'])
+def delete_customer(id):
+    customer = Customer.query.get(id)
+    if not customer:
+        return {"Error":"Could not find that customer, please enter existing customer id in order to delete a customer."}
+    db.session.delete(customer)
+    db.session.commit()
+    return {'Success': 'Customer successfully removed from database. This change is permenant, to re add the customer, POST the details.'}
 
     
 #GET retrieves data from server 
