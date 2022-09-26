@@ -20,7 +20,7 @@ def single_ram(id):
     ram_list = Ram.query.get(id)
     if not ram_list:
         return {"Error": "Invalid ID, could not find RAM, please try again."}
-    result = ram_schema.dump(ram_list)
+    result = single_ram_schema.dump(ram_list)
     return jsonify(result)
 
 #POST ram to database
@@ -49,3 +49,19 @@ def delete_ram(id):
     db.session.commit()
     return {"Message":"Successfully deleted the ram. This is permenant. To re-add the RAM, POST it to the database."}
     
+
+#UPDATE ram on the database
+@ram.route('/<int:id>', methods=['PUT'])
+def update_ram(id):
+    ram = Ram.query.get(id)
+    if not ram:
+        return {"Error":"Cannot find that ram on the database. Please re-enter a different ID and try again."}
+    ram_fields = ram_schema.load(request.json)
+    ram.ram_type = ram_fields['ram_type']
+    ram.ram_size = ram_fields['ram_size']
+    ram.ram_name = ram_fields['ram_name']
+    ram.price = ram_fields['price']
+    ram.rating = ram_fields['rating']
+    db.session.commit()
+    return jsonify(ram_schema.dump(ram)
+    )

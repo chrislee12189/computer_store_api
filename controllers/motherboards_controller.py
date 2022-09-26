@@ -13,7 +13,7 @@ def all_motherboards():
     motherboards = Motherboards.query.all()
     if not motherboards:
         return {"Error": "No motherboard found, please check your entry and try again."}
-    result = motherboard_schema.dump(motherboards)
+    result = motherboards_schema.dump(motherboards)
     return jsonify(result)
 
 #get 1 motherboard in database
@@ -22,7 +22,7 @@ def get_motherboard(id):
     motherboard = Motherboards.query.get(id)
     if not motherboard:
         return {"Error": "No motherboard found, please check your entry and try again."}
-    result = motherboards_schema.dump(motherboard)
+    result = motherboard_schema.dump(motherboard)
     return jsonify(result)
 
 #CREATE motherboard

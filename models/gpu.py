@@ -8,5 +8,5 @@ class Gpu(db.Model):
     gpu_type = db.Column(db.Integer)
     gpu_name = db.Column(db.String())
     voltage_required = db.Column(db.Integer)
-    # price = db.Column(db.Integer, db.ForeignKey('product.price'))
+    price = db.Column(db.Integer)
     rating = db.Column(db.Integer)
