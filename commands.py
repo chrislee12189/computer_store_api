@@ -1,5 +1,7 @@
 from flask import Blueprint
 from main import db 
+#import the instance, not the class.
+from main import bcrypt
 from models.admin import Administrator
 from models.customers import Customer 
 from models.order import Order 
@@ -30,8 +32,13 @@ def drop_db():
 #CREATE ORIGINAL ENTRY FOR ALL TABLES. REMAINDER OF THE DATA WILL BE ADDED VIA POST METHOD.
 def seed_db():
 
-#i have not created hard coded admin profile, simply importing administrator model is enough. flask db create, seed + checked admin was added to psql. admin successfully added.
-
+    admin1 = Administrator(
+        username = 'Chris',
+        email = 'chris@admin.com',
+        #encrypt password
+        password = bcrypt.generate_password_hash('Weeeeeeeee').decode('utf-8')
+    )
+    db.session.add(admin1)
 
 
     customer1 = Customer(
