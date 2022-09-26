@@ -63,5 +63,4 @@ def update_ram(id):
     ram.price = ram_fields['price']
     ram.rating = ram_fields['rating']
     db.session.commit()
-    return jsonify(ram_schema.dump(ram)
-    )
+    return jsonify(ram_schema.dump(ram))

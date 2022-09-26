@@ -1,5 +1,6 @@
 from flask import Blueprint
 from main import db 
+from models.admin import Administrator
 from models.customers import Customer 
 from models.order import Order 
 from models.product import Product
@@ -28,6 +29,11 @@ def drop_db():
 @db_commands.cli.command('seed')
 #CREATE ORIGINAL ENTRY FOR ALL TABLES. REMAINDER OF THE DATA WILL BE ADDED VIA POST METHOD.
 def seed_db():
+
+#i have not created hard coded admin profile, simply importing administrator model is enough. flask db create, seed + checked admin was added to psql. admin successfully added.
+
+
+
     customer1 = Customer(
         first_name = 'John',
         last_name = 'Doe',
@@ -71,6 +77,7 @@ def seed_db():
         gpu_type = 1,
         gpu_name = 'Aorus Master RTX 3070 LHR 8GB',
         voltage_required = 650,
+        price = 1050,
         rating = 5
     )
     db.session.add(gpu1)

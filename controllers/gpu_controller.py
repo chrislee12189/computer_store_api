@@ -32,6 +32,7 @@ def create_gpu():
         gpu_type = gpu_fields['gpu_type'],
         gpu_name = gpu_fields['gpu_name'],
         voltage_required = gpu_fields['voltage_required'],
+        price = gpu_fields['price'],
         rating = gpu_fields['rating'],
     )
     db.session.add(new_gpu)
@@ -58,4 +59,5 @@ def update_gpu(id):
     gpu.gpu_type = gpu_field['gpu_type'],
     gpu.gpu_name = gpu_field['gpu_name'],
     gpu.voltage_required = gpu_field['voltage_required'],
+    gpu.price = gpu_field['price'],
     gpu.rating = gpu_field['rating'],
