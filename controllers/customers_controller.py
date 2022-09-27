@@ -4,7 +4,7 @@ from flask import request
 from main import db 
 from models.customers import Customer 
 from schemas.customers_schema import customer_schema, customers_schema
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
 #! the customers controller is used to control end points for creating, retrieving, updating and deleting customers
 
@@ -63,6 +63,7 @@ def update_customer(id):
     return jsonify(customer_schema.dump(customer))
 
 #DELETE customer 
+#! only available to admin
 @customers.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_customer(id):

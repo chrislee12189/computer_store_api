@@ -27,6 +27,7 @@ def find_product(id):
     return jsonify(result)
 
 #CREATE product 
+#! only available to admin
 @products.route('/', methods=['POST'])
 @jwt_required()
 def create_product():
@@ -40,7 +41,9 @@ def create_product():
     db.session.add(product)
     db.session.commit()
     return jsonify(product_schema.dump(product))
+
 #UPDATE product
+#! only available to admin
 @products.route('/<int:id>', methods=['PUT'])
 @jwt_required()
 def update_product(id):
@@ -53,7 +56,9 @@ def update_product(id):
     product.price = product_fields['price']
     db.session.commit()
     return jsonify(product_schema.dump(product))
+    
 #DELETE product
+#! only available to admin
 @products.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_product(id):

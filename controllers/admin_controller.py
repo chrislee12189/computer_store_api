@@ -45,6 +45,7 @@ def delete_admin(id):
     return{"Message": "Successfully delete ADMIN."}
 
 #make a login for administrator 
+#! LOGIN for admin
 @admin.route('/login', methods = ['POST'])
 def log_in():
     admin_fields = admin_schema.load(request.json)

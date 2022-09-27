@@ -49,6 +49,7 @@ def create_order():
 
 
 #delete an order 
+#! only available to admin
 @order.route('/<int:id>', methods = ['DELETE'])
 @jwt_required()
 def delete_order(id):
