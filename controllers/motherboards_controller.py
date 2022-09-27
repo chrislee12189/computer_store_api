@@ -40,7 +40,7 @@ def create_motherboard():
     return jsonify(motherboard_schema.dump(new_mobo))
 
 #UPDATE exsisting motherboard
-@motherboards.route('/', methods = ['PUT'])
+@motherboards.route('/<int:id>', methods = ['PUT'])
 def update_motherboard(id):
     motherboard = Motherboards.query.get(id)
     if not motherboard:
@@ -53,7 +53,7 @@ def update_motherboard(id):
     db.session.commit()
     return jsonify(motherboard_schema.dump(motherboard))
 
-@motherboards.route('/', methods = ['DELETE'])
+@motherboards.route('/<int:id>', methods = ['DELETE'])
 def delete_motherboard(id):
     motherboard = Motherboards.query.get(id)
     if not motherboard:

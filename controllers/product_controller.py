@@ -4,7 +4,8 @@ from flask import request
 from main import db 
 from models.product import Product 
 from schemas.product_schema import product_schema, products_schema
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity, jwt_required
+
 
 #! this controller is used for all products that will be present on databse. This will be a complete list of products that have been seperated by type in other tables.
 
@@ -22,8 +23,10 @@ def get_product():
 #GET 1 product
 @products.route('/<int:id>', methods=['GET'])
 def find_product(id):
-    product_list = Product.query.get(id)
-    result = products_schema.dump(product_list)
+    product = Product.query.get(id)
+    if not product:
+        return {"Error": "Product not found. Try a different ID"}
+    result = product_schema.dump(product)
     return jsonify(result)
 
 #CREATE product 
@@ -31,6 +34,8 @@ def find_product(id):
 @products.route('/', methods=['POST'])
 @jwt_required()
 def create_product():
+    if get_jwt_identity() != 'admin':
+        return {"Message":"Administrator access only, if you are an administrator, please log in, if you are not an administrator, you cannot access this method."}
     product_fields = product_schema.load(request.json)
     product = Product(
         description=product_fields['description'],

@@ -12,6 +12,7 @@ from models.gpu import Gpu
 from models.psu import Psu
 from models.ram import Ram
 from models.ratings import Ratings
+
 # from datetime import date 
 db_commands = Blueprint('db', __name__)
 #! flask db drop, flask db create, flask db seed commands 
@@ -46,17 +47,69 @@ def seed_db():
         last_name = 'Doe',
         address = '123 Main Street',
         postcode = '1236',
-        phone = '0234567891'
+        phone = '0234567891',
+        
     )
     db.session.add(customer1)
+    #! we need customer_id for the orders foreign key.
+    #! we dont get IDs until we commit to the database.
+    db.session.commit()
+    
+    customer2 = Customer(
+    first_name = 'Jensen',
+    last_name = 'Edric',
+    address = '12 Black Dog Drive',
+    postcode = '3456',
+    phone = '0222568484'
+    )
+    db.session.add(customer2)
+
+    customer3 = Customer(
+        first_name = 'Cornelius',
+        last_name = 'Ansel',
+        address = '1 Channing Road',
+        postcode = '3000',
+        phone = '0493827166'
+    )
+    db.session.add(customer3)
     
     order1 = Order(
-        customer_name = 'Jane Doe',
-        to_address = '234 West Street',
-        to_postcode = '9876',
-        shipping_date = '2022'
+        customers_id = customer1.customers_id,
+        customer_name = customer1.first_name + " " + customer1.last_name,
+        to_address = customer1.address,
+        to_postcode = customer1.postcode,
+
+        shipping_date = '2022',
     )
     db.session.add(order1)
+
+    order2 = Order(
+        customers_id = customer2.customers_id,
+        customer_name = customer2.first_name + " " + customer2.last_name,
+        to_address = customer2.address,
+        to_postcode = customer2.postcode,
+        shipping_date = '2022',
+        
+    )
+    db.session.add(order2)
+#!order 3 and 4 belong to customer 3
+    order3 = Order(
+        customers_id = customer3.customers_id,
+        customer_name = customer3.first_name + " " + customer3.last_name,
+        to_address = customer3.address,
+        to_postcode = customer3.postcode,
+        shipping_date = '2022',
+        
+    )
+    db.session.add(order3)
+
+    order4 = Order(
+        customers_id = customer3.customers_id,
+        shipping_date = '2022',
+        
+    )
+    db.session.add(order4)
+
 
     product1 = Product(
         description = 'ASUS Prime A520M-K. (Type 1)',
@@ -65,6 +118,7 @@ def seed_db():
         price = 299
     )
     db.session.add(product1)
+    
     motherboard1 =Motherboards(
         motherboard_type = 1,
         motherboard_name = 'Aorus x570s elite (AMD Socket)',
