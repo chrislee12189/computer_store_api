@@ -72,7 +72,7 @@ def seed_db():
         phone = '0493827166'
     )
     db.session.add(customer3)
-    
+    #!ORDERS WILL NEED MORE INFORMATION. NEED TO ADD WHAT PRODUCTS ARE ORDERED.
     order1 = Order(
         customers_id = customer1.customers_id,
         customer_name = customer1.first_name + " " + customer1.last_name,
@@ -105,6 +105,9 @@ def seed_db():
 
     order4 = Order(
         customers_id = customer3.customers_id,
+        customer_name = customer3.first_name + " " + customer3.last_name,
+        to_address = customer3.address,
+        to_postcode = customer3.postcode,
         shipping_date = '2022',
         
     )
