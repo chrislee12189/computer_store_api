@@ -4,7 +4,7 @@ from flask import request
 from main import db 
 from models.customers import Customer 
 from schemas.customers_schema import customer_schema, customers_schema
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import jwt_required
 
 #! the customers controller is used to control end points for creating, retrieving, updating and deleting customers
 
@@ -41,7 +41,7 @@ def create_customer():
         last_name = customer_fields['last_name'],
         address = customer_fields['address'],
         postcode = customer_fields['postcode'],
-        phone = customer_fields['phone']
+        phone = customer_fields['phone'],
     )
     db.session.add(customer)
     db.session.commit()

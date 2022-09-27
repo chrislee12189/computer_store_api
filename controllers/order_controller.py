@@ -32,16 +32,18 @@ def get_orders(id):
     return jsonify(result)
 
 #post method
+
 @order.route('/', methods = ['POST'])
 def create_order():
     #create new order object
     #get the values from the request and load them with the single schema
     order_fields = order_schema.load(request.json)
     new_order = Order(
-        customer_name = order_fields['customers_name'],
+        customer_name = order_fields['customer_name'],
         to_address = order_fields['to_address'],
         to_postcode = order_fields['to_postcode'],
         shipping_date = order_fields['shipping_date'],
+        customers_id = order_fields['customers_id']
     )
     db.session.add(new_order)
     db.session.commit()
