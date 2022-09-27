@@ -9,6 +9,9 @@ from datetime import timedelta
 from models.admin import Administrator 
 from schemas.admin_schema import admin_schema
 
+#! this controller is used for the administators, in this controller, admin passwords are hashed for security purposes, creating a new admin has constraints on email and password originality
+
+
 admin = Blueprint('admin', __name__, url_prefix='/admin')
 
 @admin.route('/register', methods=['POST'])
@@ -52,6 +55,6 @@ def log_in():
     if not bcrypt.check_password_hash(admin.password, admin_fields['password']):
         return {"Error": "Password is incorrect, change it and try again."}
 
-
     token = create_access_token(identity = str(admin.admin_id), expires_delta=timedelta(days=5))
+    
     return {"username": admin.username, "token": token}

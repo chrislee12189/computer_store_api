@@ -4,6 +4,11 @@ from flask import request
 from main import db 
 from schemas.orders_schema import order_schema, orders_schema
 from models.order import Order 
+from flask_jwt_extended import jwt_required
+
+#! the order controller is used to control end points for creating, retrieving, updating and deleting orders on the database. orders will be linked to a customer with foreign key, jwt authentication will allow users to manage their own orders and will not be exclusive to administrators.
+
+#! anyone can create or update an order, only an admin can delete one however.
 
 order = Blueprint('orders', __name__, url_prefix ="/orders")
 #controller is now connected to main file.
@@ -45,6 +50,7 @@ def create_order():
 
 #delete an order 
 @order.route('/<int:id>', methods = ['DELETE'])
+@jwt_required()
 def delete_order(id):
     order = Order.query.get(id)
     if not order:

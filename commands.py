@@ -14,7 +14,7 @@ from models.ram import Ram
 from models.ratings import Ratings
 # from datetime import date 
 db_commands = Blueprint('db', __name__)
-
+#! flask db drop, flask db create, flask db seed commands 
 #create models
 @db_commands.cli.command('create')
 def create_db():

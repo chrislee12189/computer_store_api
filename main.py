@@ -39,7 +39,7 @@ class CustomerSchema(ma.Schema):
         #list inside the tuple states which field we want in our json
         fields = ('customers_id', 'first_name', 'last_name', 'address', 'postcode', 'phone')
 
-
+#! these commands are redundant and have been replaced by db.commands in the commands file. will need to ensure i can remove them without breaking other stuff first.
 #create models
 @app.cli.command('create')
 def create_db():

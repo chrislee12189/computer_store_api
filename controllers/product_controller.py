@@ -4,8 +4,11 @@ from flask import request
 from main import db 
 from models.product import Product 
 from schemas.product_schema import product_schema, products_schema
+from flask_jwt_extended import jwt_required
 
+#! this controller is used for all products that will be present on databse. This will be a complete list of products that have been seperated by type in other tables.
 
+#! products controller has more constraints than customer or orders. here only an admin can create, update or delete a product. I have done it like this because items available for customers/present in orders should be protected against anyone changing them or removing them. As for customer and orders, they are free to manage their own details.
 
 products = Blueprint('products', __name__, url_prefix='/products')
 
@@ -25,6 +28,7 @@ def find_product(id):
 
 #CREATE product 
 @products.route('/', methods=['POST'])
+@jwt_required()
 def create_product():
     product_fields = product_schema.load(request.json)
     product = Product(
@@ -38,6 +42,7 @@ def create_product():
     return jsonify(product_schema.dump(product))
 #UPDATE product
 @products.route('/<int:id>', methods=['PUT'])
+@jwt_required()
 def update_product(id):
     product = Product.query.get(id)
     if not product:
@@ -50,6 +55,7 @@ def update_product(id):
     return jsonify(product_schema.dump(product))
 #DELETE product
 @products.route('/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_product(id):
     product = Product.query.get(id)
     if not product:

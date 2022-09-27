@@ -11,6 +11,6 @@ from controllers.admin_controller import admin
 # from controllers.mobo_cpu_compat_controller import mobo_cpu_compat
 # from controllers.gpu_psu_compat_controller import gpu_psu_compat
 
-#register controllers here 
+#!controllers are registerd in this file.
 
 registerable_controllers = [customers,order,products,motherboards,ram,cpu,gpu,psu,admin]
