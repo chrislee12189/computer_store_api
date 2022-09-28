@@ -115,6 +115,7 @@ def seed_db():
 
 
     product1 = Product(
+        product_id = 1,
         description = 'ASUS Prime A520M-K. (Type 1)',
         quantity = 1,
         product_type = 'AMD Socket',
@@ -122,14 +123,16 @@ def seed_db():
     )
     db.session.add(product1)
     
+    
+    #! work on product_id needed
     motherboard1 =Motherboards(
         motherboard_type = 1,
         motherboard_name = 'Aorus x570s elite (AMD Socket)',
         price = 350,
         rating = 5
-        
     )
     db.session.add(motherboard1)
+    #! work on product_id needed
     cpu1 = Cpu(
         cpu_type = 1,
         cpu_name = 'Ryzen 7 3700x (AM4)',
@@ -142,7 +145,7 @@ def seed_db():
         gpu_name = 'Aorus Master RTX 3070 LHR 8GB',
         voltage_required = 650,
         price = 1050,
-        rating = 5
+        rating = 5,
     )
     db.session.add(gpu1)
 
