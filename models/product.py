@@ -11,13 +11,3 @@ class Product(db.Model):
     quantity = db.Column(db.Integer)
     product_type = db.Column(db.String())
     price = db.Column(db.Integer)
-    cpus =db.relationship(
-        #link the class 
-        "Cpu",
-        #back reference to this relationship is cpu
-        backref="product"
-    )
-    motherboards=db.relationship(
-        "Motherboards",
-        backref="product"
-    )

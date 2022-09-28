@@ -122,7 +122,7 @@ def seed_db():
         price = 299
     )
     db.session.add(product1)
-    
+    db.session.commit()
     
     #! work on product_id needed
     motherboard1 =Motherboards(

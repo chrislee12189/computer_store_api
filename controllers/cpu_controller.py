@@ -28,8 +28,8 @@ def create_cpu():
     new_cpu = Cpu(
         cpu_type = cpu_fields['cpu_type'],
         cpu_name = cpu_fields['cpu_name'],
-        cpu_price = cpu_fields['cpu_price'],
-        cpu_rating = cpu_fields['cpu_rating']
+        price = cpu_fields['price'],
+        rating = cpu_fields['rating']
     )
     db.session.add(new_cpu)
     db.session.commit()
