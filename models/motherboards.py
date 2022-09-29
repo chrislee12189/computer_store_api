@@ -8,4 +8,7 @@ class Motherboards(db.Model):
     motherboard_name = db.Column(db.String())
     price = db.Column(db.Integer)
     rating = db.Column(db.Integer)
-    
+    product = db.relationship(
+        "Product",#class im referencing
+        backref = "motherboards"# this name can be any, the purpose of this is to use this as a field in the product schema, so make sure it matches with that field, cpu in both would make sense
+    )

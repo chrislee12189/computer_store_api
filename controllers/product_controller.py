@@ -34,14 +34,16 @@ def find_product(id):
 @products.route('/', methods=['POST'])
 @jwt_required()
 def create_product():
-    if get_jwt_identity() != 'admin':
+    print(get_jwt_identity())
+    if get_jwt_identity() != "admin":
         return {"Message":"Administrator access only, if you are an administrator, please log in, if you are not an administrator, you cannot access this method."}
     product_fields = product_schema.load(request.json)
     product = Product(
         description=product_fields['description'],
         quantity=product_fields['quantity'],
         product_type=product_fields['product_type'],
-        price = product_fields['price']
+        price = product_fields['price'],
+        cpu_id = product_fields['cpu_id']
     )
     db.session.add(product)
     db.session.commit()

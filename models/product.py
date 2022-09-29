@@ -12,3 +12,7 @@ class Product(db.Model):
     product_type = db.Column(db.String())
     price = db.Column(db.Integer)
     cpu_id = db.Column(db.Integer, db.ForeignKey("cpu.cpu_id"))
+    gpu_id = db.Column(db.Integer, db.ForeignKey("gpu.gpu_id"))
+    psu_id = db.Column(db.Integer, db.ForeignKey("psu.psu_id"))
+    ram_id = db.Column(db.Integer, db.ForeignKey("ram.ram_id"))
+    motherboard_id = db.Column(db.Integer, db.ForeignKey("motherboards.motherboard_id"))

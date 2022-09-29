@@ -8,7 +8,7 @@ from controllers.ram_controller import ram
 from controllers.motherboards_controller import motherboards
 from controllers.admin_controller import admin
 # from controllers.ratings_controller import ratings
-# from controllers.mobo_cpu_compat_controller import mobo_cpu_compat
+
 # from controllers.gpu_psu_compat_controller import gpu_psu_compat
 
 #!controllers are registerd in this file.

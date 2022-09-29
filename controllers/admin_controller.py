@@ -56,6 +56,6 @@ def log_in():
     if not bcrypt.check_password_hash(admin.password, admin_fields['password']):
         return {"Error": "Password is incorrect, change it and try again."}
 
-    token = create_access_token(identity = str(admin.admin_id), expires_delta=timedelta(days=5))
+    token = create_access_token(identity = "admin", expires_delta=timedelta(days=5))
     
     return {"username": admin.username, "token": token}

@@ -9,4 +9,8 @@ class Ram(db.Model):
     ram_name = db.Column(db.String())
     price = db.Column(db.Integer)
     rating = db.Column(db.Integer)
+    product = db.relationship(
+        "Product",
+        backref = "ram"
+    )
     
