@@ -11,3 +11,4 @@ class Product(db.Model):
     quantity = db.Column(db.Integer)
     product_type = db.Column(db.String())
     price = db.Column(db.Integer)
+    cpu_id = db.Column(db.Integer, db.ForeignKey("cpu.cpu_id"))

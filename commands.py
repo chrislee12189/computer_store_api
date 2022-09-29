@@ -114,17 +114,8 @@ def seed_db():
     db.session.add(order4)
 
 
-    product1 = Product(
-        product_id = 1,
-        description = 'ASUS Prime A520M-K. (Type 1)',
-        quantity = 1,
-        product_type = 'AMD Socket',
-        price = 299
-    )
-    db.session.add(product1)
-    db.session.commit()
     
-    #! work on product_id needed
+    #! needs work for foreign key ID
     motherboard1 =Motherboards(
         motherboard_type = 1,
         motherboard_name = 'Aorus x570s elite (AMD Socket)',
@@ -132,14 +123,45 @@ def seed_db():
         rating = 5
     )
     db.session.add(motherboard1)
-    #! work on product_id needed
+    #! needs work for foreig key ID
     cpu1 = Cpu(
         cpu_type = 1,
-        cpu_name = 'Ryzen 7 3700x (AM4)',
+        cpu_name = 'ASUS Prime A520M-K. (Type 1)',
         price = 360,
         rating = 3
     )
     db.session.add(cpu1)
+
+    cpu2 = Cpu(
+        cpu_type = 1,
+        cpu_name = 'Ryzen 9 5900x (Type 1)' ,
+        price = 500,
+        rating = 5
+    )
+    db.session.add(cpu2)
+    db.session.commit()
+    product1 = Product(
+        product_id = 1,
+        description = cpu1.cpu_name ,
+        quantity = 1,
+        product_type = 'AMD Socket',
+        price = 299,
+        cpu_id = cpu1.cpu_id
+    )
+    db.session.add(product1)
+
+    product2 = Product(
+        product_id = 2,
+        description = cpu2.cpu_name,
+        quantity = 13,
+        product_type = 'AMD Socket',
+        price = 500,
+        cpu_id = cpu2.cpu_id
+    )
+    db.session.add(product2)
+    db.session.commit()
+
+
     gpu1 = Gpu(
         gpu_type = 1,
         gpu_name = 'Aorus Master RTX 3070 LHR 8GB',
