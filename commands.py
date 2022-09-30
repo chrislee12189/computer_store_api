@@ -13,6 +13,7 @@ from models.psu import Psu
 from models.ram import Ram
 from models.ratings import Ratings
 from models.mobo_cpu_compat import Compat 
+from models.voltage_req import VoltageReq
 
 
 # from datetime import date 
@@ -496,5 +497,36 @@ def seed_db():
     )
     db.session.add(rating4)
     db.session.commit()
+#!---------------------------------------------------VOLTAGE COMPATIBLITY/SUFFICIENT-------------------------------------------!#
 
+    voltage1 = VoltageReq(
+        voltage_id = 1,
+        product_id = product3.product_id,
+        gpu_id = gpu1.gpu_id,
+        psu_id = psu1.psu_id,
+        gpu_name = gpu1.gpu_name,
+        psu_name = psu1.psu_name,
+        voltage_req = gpu1.voltage_required,
+        voltage_supplied = psu1.voltage,
+        comment = "Sufficient voltage."
+    )
+    db.session.add(voltage1)
+
+    voltage2 = VoltageReq(
+        voltage_id = 2,
+        product_id = product4.product_id,
+        gpu_id = gpu2.gpu_id,
+        psu_id = psu2.psu_id,
+        gpu_name = gpu2.gpu_name,
+        psu_name = psu2.psu_name,
+        voltage_req = gpu2.voltage_required,
+        voltage_supplied = psu2.voltage,
+        comment = "Sufficient voltage."
+    )
+    db.session.add(voltage2)
+
+
+
+
+    db.session.commit()
     print('Table seeded')

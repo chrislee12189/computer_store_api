@@ -9,7 +9,8 @@ from controllers.motherboards_controller import motherboards
 from controllers.admin_controller import admin
 from controllers.mobo_cpu_compat_controller import compatibility
 from controllers.ratings_controller import rating
+from controllers.voltage_req_controller import voltages
 
 #!controllers are registerd in this file.
 
-registerable_controllers = [customers,order,products,motherboards,ram,cpu,gpu,psu,admin,compatibility, rating]
+registerable_controllers = [customers,order,products,motherboards,ram,cpu,gpu,psu,admin,compatibility, rating, voltages]

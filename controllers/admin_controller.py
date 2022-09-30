@@ -1,13 +1,13 @@
 from flask import Blueprint 
-from flask import jsonify
 from flask import request
 from main import db
 from main import bcrypt
-from main import jwt
+from marshmallow.exceptions import ValidationError
 from flask_jwt_extended import create_access_token
 from datetime import timedelta
 from models.admin import Administrator 
 from schemas.admin_schema import admin_schema
+
 
 #! this controller is used for the administators, in this controller, admin passwords are hashed for security purposes, creating a new admin has constraints on email and password originality
 
@@ -59,3 +59,8 @@ def log_in():
     token = create_access_token(identity = "admin", expires_delta=timedelta(days=5))
     
     return {"username": admin.username, "token": token}
+
+
+@admin.errorhandler(ValidationError)
+def register_validation_errors(error):
+    return error.messages, 400

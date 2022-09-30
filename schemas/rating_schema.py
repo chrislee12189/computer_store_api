@@ -1,6 +1,5 @@
 from main import ma 
-from marshmallow import fields
-# from schemas.rating_schema import RatingSchema
+
 
 
 class RatingSchema(ma.Schema):

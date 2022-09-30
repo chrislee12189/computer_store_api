@@ -3,7 +3,6 @@ from main import db
 class Psu(db.Model):
     __tablename__ = 'psu'
     psu_id = db.Column(db.Integer, primary_key=True)
-    # product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     psu_type = db.Column(db.Integer)
     psu_name = db.Column(db.String())
     voltage = db.Column(db.Integer)
