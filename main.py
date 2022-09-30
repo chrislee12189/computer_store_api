@@ -2,16 +2,25 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow 
+from flask_bcrypt import Bcrypt 
+from flask_jwt_extended import JWTManager
 
+#this is the flask object
 app = Flask(__name__)    
 app.config.from_object('config.app_config')
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+bcrypt = Bcrypt(app)
+jwt = JWTManager(app)
+
 
 def create_app():
     #create new flask app, name = 'app'
+    #these are the instances of the flask object
     db.init_app(app)
     ma.init_app(app)
+    bcrypt.init_app(app)
+    jwt.init_app(app)
     #begin modularisation of app so cli commands dont rely on 'app' prefix
     from commands import db_commands
     # register the blueprint for our commands. commands and controllers will use blueprints
@@ -30,7 +39,7 @@ class CustomerSchema(ma.Schema):
         #list inside the tuple states which field we want in our json
         fields = ('customers_id', 'first_name', 'last_name', 'address', 'postcode', 'phone')
 
-
+#! these commands are redundant and have been replaced by db.commands in the commands file. will need to ensure i can remove them without breaking other stuff first.
 #create models
 @app.cli.command('create')
 def create_db():
