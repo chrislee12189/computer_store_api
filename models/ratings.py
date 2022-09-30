@@ -4,7 +4,10 @@ from main import db
 class Ratings(db.Model):
     __tablename__ = 'ratings'
     rating_id = db.Column(db.Integer, primary_key=True)
-    test = db.Column(db.String())
-    # product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
-    # customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
-    # price = db.Column(db.Integer, db.ForeignKey('product.price'))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.customers_id'))
+    customer_name = db.Column(db.String())
+    product_name = db.Column(db.String())
+    rating = db.Column(db.Integer)
+    comment = db.Column(db.String())
+    price = db.Column(db.Integer)

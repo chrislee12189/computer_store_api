@@ -7,10 +7,9 @@ from controllers.psu_controller import psu
 from controllers.ram_controller import ram
 from controllers.motherboards_controller import motherboards
 from controllers.admin_controller import admin
-# from controllers.ratings_controller import ratings
-
-# from controllers.gpu_psu_compat_controller import gpu_psu_compat
+from controllers.mobo_cpu_compat_controller import compatibility
+from controllers.ratings_controller import rating
 
 #!controllers are registerd in this file.
 
-registerable_controllers = [customers,order,products,motherboards,ram,cpu,gpu,psu,admin]
+registerable_controllers = [customers,order,products,motherboards,ram,cpu,gpu,psu,admin,compatibility, rating]

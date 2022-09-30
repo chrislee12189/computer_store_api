@@ -1,13 +1,18 @@
-# from flask import Blueprint 
-# from flask import jsonify
-# from flask import request
-# from main import db 
-# from models.cpu import Cpu
-# from models.motherboards import Motherboards
-# from schemas.motherboard_schema import motherboard_schema, motherboards_schema
-# from schemas.cpu_schema import cpu_schema, cpus_schema
+from flask import Blueprint 
+from flask import jsonify
 
-# compat = Blueprint('compat', __name__, url_prefix='/compat')
+from models.mobo_cpu_compat import Compat
+from schemas.mobo_cpu_compat_schema import multi_compat
 
 
-    
+compatibility = Blueprint('compatibility', __name__, url_prefix='/compatibility')
+
+
+#! THIS CONTROLLER RETURNS A LIST OF ALL CPUS AND MOTHERBOARDS THAT ARE COMPATIBLE WITH EACH OTHER
+#GET compatibilte mobo and cpu
+@compatibility.route('/', methods=['GET'])
+def get_compat():
+    compat_list = Compat.query.all()
+    result = multi_compat.dump(compat_list)
+    return jsonify(result)
+

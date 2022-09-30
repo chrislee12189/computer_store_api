@@ -12,6 +12,7 @@ from models.gpu import Gpu
 from models.psu import Psu
 from models.ram import Ram
 from models.ratings import Ratings
+from models.mobo_cpu_compat import Compat 
 
 
 # from datetime import date 
@@ -73,7 +74,7 @@ def seed_db():
         phone = '0493827166'
     )
     db.session.add(customer3)
-    #!ORDERS WILL NEED MORE INFORMATION. NEED TO ADD WHAT PRODUCTS ARE ORDERED.
+
     order1 = Order(
         customers_id = customer1.customers_id,
         customer_name = customer1.first_name + " " + customer1.last_name,
@@ -256,10 +257,6 @@ def seed_db():
         rating =5
     )
     db.session.add(ram3)
-    rating1 = Ratings(
-        test = "Testing. Ratings will use foreign keys to collect info."
-    )
-    db.session.add(rating1)
     db.session.commit()
 
 #! PRODUCTS LAST SO THAT THEY CAN REFERENCE SPECIFIC IDS FROM OTHER TABLES
@@ -409,4 +406,95 @@ def seed_db():
     )
     db.session.add(product14)
     db.session.commit()
+
+    compat1 = Compat(
+        compat_id = 1,
+        compatible = "Compatible",
+        cpu_rating = cpu1.rating,
+        motherboard_rating =motherboard1.rating,
+        cpu_id = cpu1.cpu_id,
+        motherboard_id = motherboard1.motherboard_id,
+        cpu_name = cpu1.cpu_name,
+        motherboard_name = motherboard1.motherboard_name
+    )
+    db.session.add(compat1)
+    db.session.commit()
+
+    compat2 = Compat(
+        compat_id = 2,
+        compatible = "Compatible",
+        cpu_rating = cpu2.rating,
+        motherboard_rating = motherboard2.rating,
+        cpu_id = cpu2.cpu_id,
+        motherboard_id = motherboard2.motherboard_id,
+        cpu_name = cpu2.cpu_name,
+        motherboard_name = motherboard2.motherboard_name
+    )
+    db.session.add(compat2)
+    db.session.commit()
+    
+    compat3 = Compat(
+        compat_id = 3,
+        compatible = "Compatible",
+        cpu_rating = cpu3.rating,
+        motherboard_rating = motherboard3.rating,
+        cpu_id = cpu3.cpu_id,
+        motherboard_id = motherboard3.motherboard_id,
+        cpu_name = cpu3.cpu_name,
+        motherboard_name = motherboard3.motherboard_name
+    )
+    db.session.add(compat3)
+    db.session.commit()
+    #!-----------------------------------------RATINGS----------------------------------------------------!#
+
+    rating1 = Ratings(
+        rating_id = 1,
+        product_id = product1.product_id,
+        customer_id = customer1.customers_id,
+        customer_name = customer1.first_name + " " + customer1.last_name,
+        product_name = product1.description,
+        rating = cpu1.rating,
+        comment = "Great CPU, reasonable price.",
+        price = cpu1.price
+    )
+    db.session.add(rating1)
+    
+    rating2 = Ratings(
+        rating_id = 2,
+        product_id = product2.product_id,
+        customer_id = customer2.customers_id,
+        customer_name = customer2.first_name + " " + customer2.last_name,
+        product_name = product2.description,
+        rating = cpu2.rating,
+        comment = "This was an awesome upgrade from my last cpu. Would reccomend!",
+        price = cpu2.price,
+    )
+    db.session.add(rating2)
+    db.session.commit()
+
+    rating3 = Ratings(
+        rating_id = 3,
+        product_id = 10,
+        customer_id = customer3.customers_id,
+        customer_name = customer3.first_name + " " + customer3.last_name,
+        product_name = product10.description,
+        rating = motherboard1.rating,
+        comment = "Powerful motherboard, so much faster than the old one i just had!",
+        price = product11.price
+    )
+    db.session.add(rating3)
+
+    rating4 = Ratings(
+        rating_id = 4,
+        product_id = 5,
+        customer_id = customer3.customers_id,
+        customer_name = customer3.first_name + " " + customer3.last_name,
+        product_name = product5.description,
+        rating = psu1.rating,
+        comment = "Recently upgraded my graphics card, needed a better PSU, this is the one!!!",
+        price = product5.price
+    )
+    db.session.add(rating4)
+    db.session.commit()
+
     print('Table seeded')

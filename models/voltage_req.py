@@ -1,6 +1,6 @@
 from main import db 
 
-class GpuPsuCompat(db.Model):
+class VoltageReq(db.Model):
     __tablename__ = 'GpuPsuCompat'
     voltage_compatablity_id = db.Column(db.Integer, primary_key=True)
     # product_id = db.Column(db.Integer, db.ForeignKey('product.id'))

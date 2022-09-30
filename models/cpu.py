@@ -14,3 +14,7 @@ class Cpu(db.Model):
         "Product",#class im referencing
         backref ="cpu"# this name can be any, the purpose of this is to use this as a field in the product schema, so make sure it matches with that field, cpu in both would make sense
     )
+    compatible = db.relationship(
+        "Compat",
+        backref ="cpu"
+    )
