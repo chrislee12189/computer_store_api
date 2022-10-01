@@ -10,6 +10,12 @@ class OrdersSchema(ma.Schema):
         #! loads but does not display
         load_only = ['customers_id']
     customer =fields.Nested("CustomerSchema",only = ("first_name","last_name", "address",))
+
+    customer_name = ma.String(required = True)
+    to_address = ma.String(required = True)
+    to_postcode = ma.Integer(required = True)
+    shipping_date = ma.Integer(required = True)
+
 #single order
 order_schema = OrdersSchema()
 

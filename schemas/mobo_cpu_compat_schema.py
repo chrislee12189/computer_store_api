@@ -11,6 +11,7 @@ class CompatSchema(ma.Schema):
     cpu = fields.Nested(CpuSchema, ordered =True, only =('cpu_id', 'cpu_name', 'cpu_type'))
     motherboard = fields.Nested(MotherboardSchema,ordered =True, only =('motherboard_id', 'motherboard_name','motherboard_type'))
 
+#not necessary right now
+# compat_schema = CompatSchema()
 
-compat_schema = CompatSchema()
 multi_compat = CompatSchema(many=True)

@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask import jsonify
 from flask import request
 from main import db 
+from marshmallow.exceptions import ValidationError
 from schemas.cpu_schema import cpu_schema, cpus_schema
 from models.cpu import Cpu
 
@@ -17,7 +18,7 @@ def all_cpu():
 def get_cpu(id):
     cpu = Cpu.query.get(id)
     if not cpu:
-        return {"Error": "Sorry, that CPU was not found, try a different ID."}
+        return {"Error": "Sorry, that CPU was not found, try a different ID."}, 404
     result = cpu_schema.dump(cpu)
     return jsonify(result)
 
@@ -40,7 +41,7 @@ def create_cpu():
 def del_cpu(id):
     cpu = Cpu.query.get(id)
     if not cpu:
-        return {"Error": "Sorry, cannot find that CPU, please re enter the ID or try a different one."}
+        return {"Error": "Sorry, cannot find that CPU, please re enter the ID or try a different one."}, 404
     db.session.delete(cpu)
     db.session.commit()
     return {"Message":"Successfully deleted CPU."}
@@ -51,11 +52,16 @@ def del_cpu(id):
 def update_cpu(id):
     cpu = Cpu.query.get(id)
     if not cpu:
-        return {"Error":"Sorry, cannot find that CPU, please re enter the ID or try a different one."}
-    cpu_fiels = cpu_schema.load(request.json)
-    cpu.cpu_type = cpu_fiels['cpu_type']
-    cpu.cpu_name = cpu_fiels['cpu_name']
-    cpu.cpu_price = cpu_fiels['cpu_price']
-    cpu.cpu_rating = cpu_fiels['cpu_rating']
+        return {"Error":"Sorry, cannot find that CPU, please re enter the ID or try a different one."}, 404
+    cpu_fields = cpu_schema.load(request.json)
+    cpu.cpu_type = cpu_fields['cpu_type']
+    cpu.cpu_name = cpu_fields['cpu_name']
+    cpu.cpu_price = cpu_fields['price']
+    cpu.cpu_rating = cpu_fields['rating']
     db.session.commit()
     return jsonify(cpu_schema.dump(cpu))
+
+
+@cpu.errorhandler(ValidationError)
+def register_validation_errors(error):
+    return error.messages, 400

@@ -4,6 +4,7 @@ from flask import request
 from main import db 
 from models.motherboards import Motherboards
 from schemas.motherboard_schema import motherboard_schema, motherboards_schema
+from marshmallow.exceptions import ValidationError
 
 motherboards = Blueprint('motherboards', __name__, url_prefix='/motherboards')
 
@@ -12,7 +13,7 @@ motherboards = Blueprint('motherboards', __name__, url_prefix='/motherboards')
 def all_motherboards():
     motherboards = Motherboards.query.all()
     if not motherboards:
-        return {"Error": "No motherboard found, please check your entry and try again."}
+        return {"Error": "No motherboard found, please check your entry and try again."}, 404
     result = motherboards_schema.dump(motherboards)
     return jsonify(result)
 
@@ -21,7 +22,7 @@ def all_motherboards():
 def get_motherboard(id):
     motherboard = Motherboards.query.get(id)
     if not motherboard:
-        return {"Error": "No motherboard found, please check your entry and try again."}
+        return {"Error": "No motherboard found, please check your entry and try again."}, 404
     result = motherboard_schema.dump(motherboard)
     return jsonify(result)
 
@@ -44,7 +45,7 @@ def create_motherboard():
 def update_motherboard(id):
     motherboard = Motherboards.query.get(id)
     if not motherboard:
-        return {"Error": "No motherboard found, please check your entry and try again."}
+        return {"Error": "No motherboard found, please check your entry and try again."}, 404
     motherboard_fields = motherboard_schema.load(request.json)
     motherboard.motherboard_type = motherboard_fields['motherboard_type']
     motherboard.motherboard_name = motherboard_fields['motherboard_name']
@@ -57,7 +58,11 @@ def update_motherboard(id):
 def delete_motherboard(id):
     motherboard = Motherboards.query.get(id)
     if not motherboard:
-        return {"Error": "No motherboard found, please check your entry and try again."}
+        return {"Error": "No motherboard found, please check your entry and try again."},404
     db.session.delete(motherboard)
     db.session.commit()
-    return {'Success':'You have successfully deleted the motherboard from our database. This change is permenant, the Motherboards can be re-added to the database using the POST method.'}
+    return {'Success':'You have successfully deleted the motherboard from our database. This change is permenant, the Motherboards can be re-added to the database using the POST method.'},202
+
+@motherboards.errorhandler(ValidationError)
+def register_validation_errors(error):
+    return error.messages, 400

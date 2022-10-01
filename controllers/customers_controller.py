@@ -5,6 +5,7 @@ from main import db
 from models.customers import Customer 
 from schemas.customers_schema import customer_schema, customers_schema
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from marshmallow.exceptions import ValidationError
 
 #! the customers controller is used to control end points for creating, retrieving, updating and deleting customers
 
@@ -81,6 +82,7 @@ def update_customer(id):
 @customers.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_customer(id):
+    print(get_jwt_identity())
     if get_jwt_identity() != 'admin':
         return {"DENIED": "You do not have permission to delete, only an administrator can delete. If you are an administrator, check your token and try again."}, 403
 
@@ -90,3 +92,9 @@ def delete_customer(id):
     db.session.delete(customer)
     db.session.commit()
     return {'Success': 'Customer successfully removed from database. This change is permenant, to re add the customer, POST the details.'}, 200
+
+
+
+@customers.errorhandler(ValidationError)
+def register_validation_errors(error):
+    return error.messages, 400

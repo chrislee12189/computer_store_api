@@ -17,6 +17,13 @@ class ProductSchema(ma.Schema):
     psu = fields.Nested(PsuSchema, only =('voltage', 'psu_name'))
     ram = fields.Nested(RamSchema, only =('ram_size', 'ram_name', 'ram_type'))
     motherboards = fields.Nested(MotherboardSchema, only =('motherboard_type','motherboard_name'))
+
+
+    description = ma.String(required = True)
+    quantity = ma.Integer(required = True)
+    product_type = ma.String(required = True)
+    price = ma.Integer(required = True)
+    product_id =ma.Integer(required = True)
 #single product
 product_schema = ProductSchema()
 #multiple products

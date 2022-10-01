@@ -15,4 +15,3 @@ def get_compat():
     compat_list = Compat.query.all()
     result = multi_compat.dump(compat_list)
     return jsonify(result)
-

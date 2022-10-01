@@ -4,7 +4,7 @@ from flask import request
 from main import db 
 from schemas.gpu_schema import gpu_schema, gpus_schema
 from models.gpu import Gpu
-
+from marshmallow.exceptions import ValidationError
 gpu = Blueprint('gpu', __name__, url_prefix='/gpu')
 
 #ALL gpus
@@ -19,7 +19,7 @@ def all_gpu():
 def get_gpu(id):
     gpu_list = Gpu.query.get(id)
     if not gpu_list:
-        return {"Error":"Sorry, that GPU was not found. Try to find a different GPU."}
+        return {"Error":"Sorry, that GPU was not found. Try to find a different GPU."}, 404
     result = gpu_schema.dump(gpu_list)
     return jsonify(result) 
 
@@ -40,7 +40,7 @@ def create_gpu():
     return jsonify(gpu_schema.dump(new_gpu))
 
 #DELETE a GPU
-@gpu.route('/', methods=['DELETE'])
+@gpu.route('/<int:id>', methods=['DELETE'])
 def del_gpu(id):
     gpu = Gpu.query.get(id)
     if not gpu:
@@ -54,10 +54,17 @@ def del_gpu(id):
 def update_gpu(id):
     gpu = Gpu.query.get(id)
     if not gpu:
-        return {"Message": "Unable to locate the GPU. Please re-enter or change the ID and try again."}
+        return {"Message": "Unable to locate the GPU. Please re-enter or change the ID and try again."}, 404
     gpu_field = gpu_schema.load(request.json)
     gpu.gpu_type = gpu_field['gpu_type'],
     gpu.gpu_name = gpu_field['gpu_name'],
     gpu.voltage_required = gpu_field['voltage_required'],
     gpu.price = gpu_field['price'],
-    gpu.rating = gpu_field['rating'],
+    gpu.rating = gpu_field['rating']
+    db.session.commit()
+    return jsonify(gpu_schema.dump(gpu))
+
+
+@gpu.errorhandler(ValidationError)
+def register_validation_errors(error):
+    return error.messages, 400
