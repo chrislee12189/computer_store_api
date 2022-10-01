@@ -14,12 +14,31 @@ from marshmallow.exceptions import ValidationError
 
 products = Blueprint('products', __name__, url_prefix='/products')
 
+
 #GET all products
 @products.route('/', methods=['GET'])
 def get_product():
-    product_list = Product.query.all()
-    result = products_schema.dump(product_list)
-    return jsonify(result)
+    print(request.query_string)
+    if request.query_string:
+        if request.args.get('description'):
+            #! only had time to create 1 query string, this query string works, however, it is not a good query search. in order for it to return the description of an item, you need to add the entire description of the product. obviously that almost defeats the purpose of it, however i ran out of time to refine it. will work on it in personal time after submission.
+            filtered_product_list = Product.query.filter_by(description = request.args.get('description'))
+        result = products_schema.dump(filtered_product_list)
+        return jsonify(result)
+        
+
+
+
+
+
+
+
+
+
+
+    # product_list = Product.query.all()
+    # result = products_schema.dump(product_list)
+    # return jsonify(result)
 
 #GET 1 product
 @products.route('/<int:id>', methods=['GET'])
